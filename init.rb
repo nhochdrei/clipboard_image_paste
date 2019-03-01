@@ -27,15 +27,4 @@ Redmine::Plugin.register :clipboard_image_paste do
   $clipboard_image_paste_remove_alpha = redmineVer[0] < 2 || (redmineVer[0] == 2 && redmineVer[1] <= 5)
 end
 
-
-if Rails::VERSION::MAJOR >= 3
-  ActionDispatch::Callbacks.to_prepare do
-    require_dependency 'clipboard_image_paste/hooks'
-    require_dependency 'clipboard_image_paste/attachment_patch'
-  end
-else
-  Dispatcher.to_prepare :clipboard_image_paste do
-    require_dependency 'clipboard_image_paste/hooks'
-    require_dependency 'clipboard_image_paste/attachment_patch'
-  end
-end
+require 'clipboard_image_paste/clipboard_image_paste'
