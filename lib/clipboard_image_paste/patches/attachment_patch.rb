@@ -28,7 +28,7 @@ module ClipboardImagePaste
         # image attachments are identified by key >= 10001, the keys should be numbers
         # 'cause acts_as_attachable is sorting them according to insertion order
         def save_attachments(attachments, author = User.current)
-          if attachments && attachments.is_a?(Hash)
+          if attachments && (attachments.is_a?(Hash) || attachments.is_a?(ActionController::Parameters))
             attachments.each do |key, value|
               next unless key.start_with?('1000')
               value['file'] = PastedImage.new(value.delete('data'), value.delete('name'))
